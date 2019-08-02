@@ -31,9 +31,9 @@
 
 #include "wipemalloc.h"
 
-#include "Common.hpp"
-#include "PCM.hpp"
-#include <cmath>
+//#include "Common.hpp"
+//#include "PCM.hpp"
+//#include <cmath>
 #include "BeatDetect.hpp"
 
 BeatDetect::BeatDetect(PCM *_pcm) {

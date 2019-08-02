@@ -36,6 +36,15 @@
 #include <algorithm>
 #include <cmath>
 
+#include "../Common.hpp"
+
+//begin: qfix
+#if defined(_WIN32) && defined(__GNUC__) 
+#ifndef projectM_isnan
+#define projectM_isnan std::isnan
+#endif
+#endif
+//end: qfix
 
 class DLLEXPORT BeatDetect
 {

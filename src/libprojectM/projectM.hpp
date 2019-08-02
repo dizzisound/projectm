@@ -29,11 +29,21 @@
 #ifndef _PROJECTM_HPP
 #define _PROJECTM_HPP
 
+
+//begin: qfix
 #ifdef WIN32
-#include "dirent.h"
+	#if defined(__GNUC__) 
+		#include "win32-dirent.h"
+		typedef struct DIR DIR;
+	#else
+		#include "dirent.h"
+	#endif
 #else
 #include <dirent.h>
 #endif /** WIN32 */
+//end: qfix
+
+
 #include <cmath>
 #include <cstdio>
 #include <string>
@@ -53,7 +63,7 @@
 #endif /** WIN32 */
 
 #endif /** MACOS */
-#ifdef WIN322
+#ifdef WIN32 //fixed WIN322//
 #define inline
 #endif /** WIN32 */
 
@@ -166,9 +176,6 @@ public:
   void projectM_resetTextures();
   void projectM_setTitle( std::string title );
   void renderFrame();
-  Pipeline * renderFrameOnlyPass1(Pipeline *pPipeline);
-  void renderFrameOnlyPass2(Pipeline *pPipeline,int xoffset,int yoffset,int eye);
-  void renderFrameEndOnSeparatePasses(Pipeline *pPipeline);
   unsigned initRenderToTexture();
   void key_handler( projectMEvent event,
 		    projectMKeycode keycode, projectMModifier modifier );
@@ -290,15 +297,11 @@ public:
   int getWindowHeight() { return _settings.windowHeight; }
   bool getErrorLoadingCurrentPreset() const { return errorLoadingCurrentPreset; }
 
-// WINRT requires the render object
-#if !defined(EYETUNE_WINRT) 
-private: 
-#endif
-  Renderer *renderer;
 private:
   PCM * _pcm;
   double sampledPresetDuration();
   BeatDetect * beatDetect;
+  Renderer *renderer;
   PipelineContext * _pipelineContext;
   PipelineContext * _pipelineContext2;
   Settings _settings;

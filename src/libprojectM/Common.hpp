@@ -35,7 +35,7 @@
 #define strcasecmp(s, t) _strcmpi(s, t)
 #endif
 
-#if defined(_MSC_VER ) && !defined(EYETUNE_WINRT)
+#ifdef _MSC_VER
 	#pragma warning( disable : 4244 4305 4996; once : 4018 )
 	#define WIN32_LEAN_AND_MEAN
 	#define NOMINMAX
@@ -130,6 +130,7 @@ extern FILE *fmemopen(void *buf, size_t len, const char *pMode);
 
 #ifdef WIN32
 #include <float.h>
+#include <math.h>
 #define isnan _isnan
 #endif /** WIN32 */
 

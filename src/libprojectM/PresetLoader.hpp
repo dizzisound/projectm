@@ -5,9 +5,17 @@
 #include <memory> // for auto pointers
 #include <sys/types.h>
 
+
+//begin: qfix
 #ifdef WIN32
-#include "dirent.h"
+	#if defined(__GNUC__) 
+		#include "win32-dirent.h"
+	#else
+		#include "dirent.h"
+	#endif
 #endif
+//end: qfix
+
 
 #ifdef __unix__
 #include <dirent.h>
@@ -24,6 +32,13 @@
 #include <vector>
 #include <map>
 #include "PresetFactoryManager.hpp"
+
+#ifdef WIN32
+#include <string> // used for path / filename stuff
+#include <memory> // for auto pointers
+#include <sys/types.h>
+typedef struct DIR DIR;
+#endif
 
 class Preset;
 class PresetFactory;

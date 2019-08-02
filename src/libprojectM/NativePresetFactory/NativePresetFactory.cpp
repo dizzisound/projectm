@@ -14,6 +14,14 @@ extern "C" {
 #  include <dlfcn.h>
 }
 
+#ifdef _WIN32
+	#include <windows.h>
+	#define dlopen(x, y) reinterpret_cast<void*>(LoadLibraryA(x))
+	#define dlsym(x, y) GetProcAddress(reinterpret_cast<HMODULE>(x), y)
+	#define dlclose(x) FreeLibrary(reinterpret_cast<HMODULE>(x))
+	#define dlerror() reinterpret_cast<const char*>(GetLastError())
+#endif
+
 #include "NativePresetFactory.hpp"
 
 typedef void Handle;

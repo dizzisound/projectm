@@ -7,6 +7,7 @@
 #include "SOIL2/SOIL2.h"
 
 #ifdef WIN32
+#define max std::max
 #include "dirent.h"
 #endif
 
@@ -76,7 +77,7 @@ TextureManager::TextureManager(const std::string _presetsURL, const int texsizeX
         // blur5 =  64  <-  user sees this as "blur3"
         if (!(i&1) || (i<2))
         {
-#if defined WIN32 && defined max
+#ifdef WIN32
 			w = max(16, w / 2);
 			h = max(16, h / 2);
 #else
@@ -310,7 +311,7 @@ void TextureManager::loadTextureDir(const std::string &dirname)
     // Allocate a new a stream given the current directory name
     if ((m_dir = opendir(dirname.c_str())) == NULL)
     {
-//        std::cout<<"No Textures Loaded from "<<dirname<<std::endl;
+        std::cout<<"No Textures Loaded from "<<dirname<<std::endl;
         return; // no files loaded. m_entries is empty
     }
 
